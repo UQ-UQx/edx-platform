@@ -140,3 +140,7 @@ dist
 
 # Visual Studio Code
 .vscode
+
+# IBL
+lms/envs/*
+cms/envs/*
