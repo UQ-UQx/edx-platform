@@ -69,6 +69,16 @@ handler500 = static_template_view_views.render_500
 urlpatterns = [
     url(r'^$', branding_views.index, name='root'),   # Main marketing page, or redirect to courseware
 
+    # IBL: Disable password reset, account settings and profile
+    url(r'^password_reset/$', handler404),
+    url(r'^account/settings$', handler404),
+    url(
+        r'^u/{username_pattern}$'.format(
+            username_pattern='(?:[\\w .@_+-]+)',
+        ),
+        handler404
+    ),
+
     url(r'', include('student.urls')),
     # TODO: Move lms specific student views out of common code
     url(r'^dashboard/?$', student_views.student_dashboard, name='dashboard'),
@@ -1048,3 +1058,12 @@ urlpatterns += [
 ]
 
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
+
+### IBL ###
+urlpatterns += (
+    url(r'^api/ibl/', include('ibl_course_metadata.lms_urls')),
+    url(r'^api/ibl/', include('ibl_course_dashboard_api.urls')),
+    url(r'^api/ibl/', include('ibl_extended_user_api.urls')),
+    url(r'', include('ibl_enrollment_api.urls')),
+)
+

@@ -279,3 +279,11 @@ if settings.FEATURES.get('ENABLE_API_DOCS'):
 
 from openedx.core.djangoapps.plugins import constants as plugin_constants, plugin_urls
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.CMS))
+
+
+### IBL ###
+urlpatterns += (
+    url(r'^api/ibl/', include('ibl_course_metadata.urls')),
+    url(r'', include('dl_course_management_api.urls')),
+)
+
